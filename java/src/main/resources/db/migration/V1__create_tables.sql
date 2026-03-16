@@ -2,13 +2,13 @@ CREATE TABLE time_deposits (
                             id INTEGER PRIMARY KEY,
                             plan_type VARCHAR(50) NOT NULL,
                             days INTEGER NOT NULL,
-                            balance DECIMAL(15,2) NOT NULL
+                            balance DOUBLE PRECISION NOT NULL
 );
 
 CREATE TABLE withdrawals (
-                            id SERIAL PRIMARY KEY,
+                            id BIGSERIAL PRIMARY KEY,
                             time_deposit_id INTEGER NOT NULL,
-                            amount DECIMAL(15,2) NOT NULL,
+                            amount DOUBLE PRECISION NOT NULL,
                             transaction_date DATE NOT NULL,
 
                             CONSTRAINT fk_deposit
