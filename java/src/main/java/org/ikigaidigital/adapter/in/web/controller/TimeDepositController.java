@@ -19,11 +19,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
+@Tag(name = "Time Deposits", description = "Operations for time deposit resources")
 @Slf4j
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("${api.base-path}/time-deposits")
-@Tag(name = "Time Deposits", description = "Operations for time deposit resources")
 public class TimeDepositController {
 
 	private final TimeDepositGetAllUseCase getAllUseCase;
@@ -38,7 +38,7 @@ public class TimeDepositController {
 	public ResponseEntity<List<TimeDepositResponseDTO>> getAll() {
 		log.info("Received request to fetch all time deposits");
 		List<TimeDepositResponseDTO> timeDepositResponseDTOS = TimeDepositDTOMapper.toDTO(getAllUseCase.getAll());
-		log.debug("Returning {} time deposits", timeDepositResponseDTOS.size());
+		log.info("Returning {} time deposits", timeDepositResponseDTOS.size());
 		return ResponseEntity.ok(timeDepositResponseDTOS);
 	}
 

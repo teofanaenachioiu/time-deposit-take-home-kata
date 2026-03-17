@@ -8,11 +8,11 @@ import lombok.*;
 
 @Entity
 @Table(name = "withdrawals")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class WithdrawalEntity {
 
 	@Id

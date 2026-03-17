@@ -10,11 +10,11 @@ import lombok.*;
 
 @Entity
 @Table(name = "time_deposits")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TimeDepositEntity {
 
 	@Id
