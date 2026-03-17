@@ -1,0 +1,24 @@
+/target/
+
+# Maven wrapper
+/.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+/.idea/
+*.iml
+*.ipr
+*.iws
+/out/
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Environment overrides
+.env
+.env.*
+
+# Testcontainers local overrides
+.testcontainers.properties
