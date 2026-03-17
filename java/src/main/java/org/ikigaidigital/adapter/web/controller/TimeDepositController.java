@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ikigaidigital.adapter.web.dto.TimeDepositResponseDTO;
 import org.ikigaidigital.adapter.web.mapper.TimeDepositDTOMapper;
 import org.ikigaidigital.port.in.TimeDepositGetAllUseCase;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("${api.base-path}/time-deposits")
 @Tag(name = "Time Deposits", description = "Operations for time deposit resources")
@@ -47,11 +49,12 @@ public class TimeDepositController {
     })
     @GetMapping
     public ResponseEntity<List<TimeDepositResponseDTO>> getAll() {
+        log.info("Received request to fetch all time deposits");
         List<TimeDepositResponseDTO> timeDepositResponseDTOS = TimeDepositDTOMapper.toDTO(getAllUseCase.getAll());
+        log.debug("Returning {} time deposits", timeDepositResponseDTOS.size());
         return ResponseEntity.ok(timeDepositResponseDTOS);
     }
 
-    @PostMapping("/update-balances")
     @Operation(
             summary = "Update balances for all time deposits",
             description = "Calculates and updates the balance for all time deposits."
@@ -68,8 +71,11 @@ public class TimeDepositController {
                     content = @Content
             )
     })
+    @PostMapping("/update-balances")
     public ResponseEntity<Void> updateAllTimeDepositsBalance() {
+        log.info("Received request to update all time deposit balances");
         updateBalanceUseCase.updateAllTimeDepositsBalance();
+        log.info("Finished updating all time deposit balances");
         return ResponseEntity.noContent().build();
     }
 }
