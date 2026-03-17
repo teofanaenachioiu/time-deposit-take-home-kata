@@ -1,7 +1,9 @@
-package org.ikigaidigital.domain.service;
+package org.ikigaidigital.unit.domain.service;
 
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
+import org.ikigaidigital.domain.service.InterestStrategy;
+import org.ikigaidigital.domain.service.InterestStrategyResolver;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

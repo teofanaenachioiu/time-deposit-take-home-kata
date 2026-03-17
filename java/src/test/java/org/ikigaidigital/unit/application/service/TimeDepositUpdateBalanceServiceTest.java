@@ -1,5 +1,6 @@
-package org.ikigaidigital.application.service;
+package org.ikigaidigital.unit.application.service;
 
+import org.ikigaidigital.application.service.TimeDepositUpdateBalanceService;
 import org.ikigaidigital.domain.model.TimeDeposit;
 import org.ikigaidigital.domain.service.TimeDepositCalculator;
 import org.ikigaidigital.port.out.TimeDepositRepository;

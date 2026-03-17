@@ -1,6 +1,7 @@
-package org.ikigaidigital.application.service;
+package org.ikigaidigital.unit.application.service;
 
 import org.ikigaidigital.application.query.model.TimeDepositView;
+import org.ikigaidigital.application.service.TimeDepositGetAllService;
 import org.ikigaidigital.port.out.TimeDepositQueryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

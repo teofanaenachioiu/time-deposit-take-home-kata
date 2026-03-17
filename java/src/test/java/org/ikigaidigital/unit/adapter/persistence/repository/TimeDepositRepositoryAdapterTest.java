@@ -1,7 +1,9 @@
-package org.ikigaidigital.adapter.persistence.repository;
+package org.ikigaidigital.unit.adapter.persistence.repository;
 
 import org.ikigaidigital.adapter.persistence.entity.TimeDepositEntity;
 import org.ikigaidigital.adapter.persistence.entity.WithdrawalEntity;
+import org.ikigaidigital.adapter.persistence.repository.TimeDepositJpaRepository;
+import org.ikigaidigital.adapter.persistence.repository.TimeDepositRepositoryAdapter;
 import org.ikigaidigital.application.query.model.TimeDepositView;
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;

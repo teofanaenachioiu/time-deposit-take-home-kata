@@ -1,6 +1,7 @@
-package org.ikigaidigital.adapter.web.mapper;
+package org.ikigaidigital.unit.adapter.web.mapper;
 
 import org.ikigaidigital.adapter.web.dto.TimeDepositResponseDTO;
+import org.ikigaidigital.adapter.web.mapper.TimeDepositDTOMapper;
 import org.ikigaidigital.application.query.model.TimeDepositView;
 import org.ikigaidigital.application.query.model.WithdrawalView;
 import org.ikigaidigital.domain.model.PlanType;

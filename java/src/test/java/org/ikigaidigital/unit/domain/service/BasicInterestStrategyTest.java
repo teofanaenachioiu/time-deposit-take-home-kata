@@ -1,7 +1,8 @@
-package org.ikigaidigital.domain.service;
+package org.ikigaidigital.unit.domain.service;
 
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
+import org.ikigaidigital.domain.service.BasicInterestStrategy;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

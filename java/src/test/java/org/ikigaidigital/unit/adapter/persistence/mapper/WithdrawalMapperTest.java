@@ -1,6 +1,7 @@
-package org.ikigaidigital.adapter.persistence.mapper;
+package org.ikigaidigital.unit.adapter.persistence.mapper;
 
 import org.ikigaidigital.adapter.persistence.entity.WithdrawalEntity;
+import org.ikigaidigital.adapter.persistence.mapper.WithdrawalMapper;
 import org.ikigaidigital.application.query.model.WithdrawalView;
 import org.junit.jupiter.api.Test;
 

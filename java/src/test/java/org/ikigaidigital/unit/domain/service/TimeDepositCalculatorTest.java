@@ -1,7 +1,10 @@
-package org.ikigaidigital.domain.service;
+package org.ikigaidigital.unit.domain.service;
 
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
+import org.ikigaidigital.domain.service.InterestStrategy;
+import org.ikigaidigital.domain.service.InterestStrategyResolver;
+import org.ikigaidigital.domain.service.TimeDepositCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;

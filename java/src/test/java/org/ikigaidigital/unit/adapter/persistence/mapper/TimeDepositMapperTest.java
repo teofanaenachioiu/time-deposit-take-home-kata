@@ -1,6 +1,7 @@
-package org.ikigaidigital.adapter.persistence.mapper;
+package org.ikigaidigital.unit.adapter.persistence.mapper;
 
 import org.ikigaidigital.adapter.persistence.entity.TimeDepositEntity;
+import org.ikigaidigital.adapter.persistence.mapper.TimeDepositMapper;
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
 import org.junit.jupiter.api.Test;

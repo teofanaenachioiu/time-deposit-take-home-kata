@@ -1,5 +1,6 @@
-package org.ikigaidigital.adapter.web.controller;
+package org.ikigaidigital.unit.adapter.web.controller;
 
+import org.ikigaidigital.adapter.web.controller.TimeDepositController;
 import org.ikigaidigital.adapter.web.dto.TimeDepositResponseDTO;
 import org.ikigaidigital.application.query.model.TimeDepositView;
 import org.ikigaidigital.application.query.model.WithdrawalView;

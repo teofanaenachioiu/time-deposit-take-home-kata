@@ -1,6 +1,7 @@
-package org.ikigaidigital.adapter.web.mapper;
+package org.ikigaidigital.unit.adapter.web.mapper;
 
 import org.ikigaidigital.adapter.web.dto.WithdrawalsResponseDTO;
+import org.ikigaidigital.adapter.web.mapper.WithdrawalsDTOMapper;
 import org.ikigaidigital.application.query.model.WithdrawalView;
 import org.junit.jupiter.api.Test;
 
