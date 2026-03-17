@@ -1,9 +1,9 @@
 package org.ikigaidigital.domain.model;
 
 public class TimeDeposit {
-    private int id;
+    private int id; // should be Long or UUID
     private String planType;
-    private Double balance;
+    private Double balance; // should be BigDecimal
     private int days;
 
     public TimeDeposit(int id, String planType, Double balance, int days) {

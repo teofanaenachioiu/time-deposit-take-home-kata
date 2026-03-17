@@ -15,7 +15,8 @@ import java.util.List;
 public class TimeDepositEntity {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "plan_type")
     private String planType;

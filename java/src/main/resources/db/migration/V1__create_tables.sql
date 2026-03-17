@@ -1,5 +1,5 @@
 CREATE TABLE time_deposits (
-                            id INTEGER PRIMARY KEY,
+                            id BIGSERIAL PRIMARY KEY,
                             plan_type VARCHAR(50) NOT NULL,
                             days INTEGER NOT NULL,
                             balance DOUBLE PRECISION NOT NULL
