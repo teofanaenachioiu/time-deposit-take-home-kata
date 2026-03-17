@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/time-deposits")
+@RequestMapping("${api.base-path}/time-deposits")
 @Tag(name = "Time Deposits", description = "Operations for time deposit resources")
 public class TimeDepositController {
 
