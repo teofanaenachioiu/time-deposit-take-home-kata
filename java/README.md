@@ -103,12 +103,11 @@ src/
 ├── main/
 │   ├── java/org/ikigaidigital/
 │   │   ├── adapter/          
-│   │   │   ├── web              # API
-│   │   │   └── persistence      # database
+│   │   │   ├── in/web           # API
+│   │   │   └── out/persistence  # database
 │   │   ├── application          # use cases
 │   │   ├── domain               # business logic
-│   │   ├── port                 # contracts
-│   │   └── TimeDepositApplication.java
+│   │   └── port                 # contracts
 │   └── resources/
 │       ├── application.yml      # configuration
 │       └── db/migration         # Flyway scripts
