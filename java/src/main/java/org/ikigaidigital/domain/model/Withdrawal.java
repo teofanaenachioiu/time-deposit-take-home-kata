@@ -1,21 +1,15 @@
 package org.ikigaidigital.domain.model;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "withdrawals")
+@AllArgsConstructor
+@Getter
 public class Withdrawal {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "time_deposit_id")
     private Integer timeDepositId;
-
     private Double amount;
-
-    @Column(name = "transaction_date")
     private LocalDate date;
 }
