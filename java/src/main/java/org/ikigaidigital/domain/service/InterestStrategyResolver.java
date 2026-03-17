@@ -9,11 +9,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class InterestStrategyFactory {
+public class InterestStrategyResolver {
 
     private final Map<PlanType, InterestStrategy> strategies;
 
-    public InterestStrategyFactory(List<InterestStrategy> strategies) {
+    public InterestStrategyResolver(List<InterestStrategy> strategies) {
         this.strategies = strategies.stream()
                 .collect(Collectors.toMap(InterestStrategy::supports, Function.identity()));
     }

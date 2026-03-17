@@ -13,12 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 public class TimeDepositCalculator {
 
-    private final InterestStrategyFactory strategyFactory;
+    private final InterestStrategyResolver strategyResolver;
 
     public void updateBalance(List<TimeDeposit> deposits) {
         for (TimeDeposit deposit : deposits) {
             PlanType planType = PlanType.valueOf(deposit.getPlanType().toUpperCase());
-            InterestStrategy strategy = strategyFactory.getStrategy(planType);
+            InterestStrategy strategy = strategyResolver.getStrategy(planType);
             Double interest = strategy.calculateInterest(deposit);
 
             Double updatedBalance = BigDecimal.valueOf(deposit.getBalance() + interest)
