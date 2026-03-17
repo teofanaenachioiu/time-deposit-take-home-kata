@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.ikigaidigital.adapters.web.dto.TimeDepositResponseDTO;
 import org.ikigaidigital.adapters.web.mapper.TimeDepositDTOMapper;
 import org.ikigaidigital.port.in.TimeDepositGetAllUseCase;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.ikigaidigital.port.in.TimeDepositUpdateBalanceUseCase;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +24,8 @@ import java.util.List;
 public class TimeDepositController {
 
     private final TimeDepositGetAllUseCase getAllUseCase;
+
+    private final TimeDepositUpdateBalanceUseCase updateBalanceUseCase;
 
     @Operation(
             summary = "Get all time deposits",
@@ -44,7 +46,30 @@ public class TimeDepositController {
             )
     })
     @GetMapping
-    public List<TimeDepositResponseDTO> getAll() {
-        return TimeDepositDTOMapper.toDTO(getAllUseCase.getAll());
+    public ResponseEntity<List<TimeDepositResponseDTO>> getAll() {
+        List<TimeDepositResponseDTO> timeDepositResponseDTOS = TimeDepositDTOMapper.toDTO(getAllUseCase.getAll());
+        return ResponseEntity.ok(timeDepositResponseDTOS);
+    }
+
+    @PostMapping("/update-balances")
+    @Operation(
+            summary = "Update balances for all time deposits",
+            description = "Calculates and updates the balance for all time deposits."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Balances updated successfully",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Unexpected server error",
+                    content = @Content
+            )
+    })
+    public ResponseEntity<Void> updateAllTimeDepositsBalance() {
+        updateBalanceUseCase.updateAllTimeDepositsBalance();
+        return ResponseEntity.noContent().build();
     }
 }
