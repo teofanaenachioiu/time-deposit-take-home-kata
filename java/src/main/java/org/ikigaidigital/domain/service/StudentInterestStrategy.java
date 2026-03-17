@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentInterestStrategy implements InterestStrategy {
 
-    private static final double INTEREST_RATE = 0.03;
+    private static final Double INTEREST_RATE = 0.03;
     private static final Double NO_INTEREST = 0.0;
 
     private static final Integer MIN_NUM_DAYS = 30;
