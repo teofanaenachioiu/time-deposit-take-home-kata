@@ -20,7 +20,7 @@ public class TimeDepositUpdateBalanceService implements TimeDepositUpdateBalance
     public void updateAllTimeDepositsBalance() {
         List<TimeDeposit> timeDepositList = repository.findAll(); // should be improved with pagination/batches
 
-        calculator.updateBalanceRefactor(timeDepositList);
+        calculator.updateBalance(timeDepositList);
         repository.save(timeDepositList);
     }
 }
