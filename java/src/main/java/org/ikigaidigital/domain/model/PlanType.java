@@ -6,7 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum PlanType {
-    BASIC,
-    STUDENT,
-    PREMIUM
+	BASIC, STUDENT, PREMIUM
 }

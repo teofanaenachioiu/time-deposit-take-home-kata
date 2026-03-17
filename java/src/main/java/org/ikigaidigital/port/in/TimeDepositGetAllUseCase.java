@@ -1,11 +1,11 @@
 package org.ikigaidigital.port.in;
 
-import org.ikigaidigital.application.query.model.TimeDepositView;
-
 import java.util.List;
+
+import org.ikigaidigital.application.query.model.TimeDepositView;
 
 public interface TimeDepositGetAllUseCase {
 
-    List<TimeDepositView> getAll();
+	List<TimeDepositView> getAll();
 
 }

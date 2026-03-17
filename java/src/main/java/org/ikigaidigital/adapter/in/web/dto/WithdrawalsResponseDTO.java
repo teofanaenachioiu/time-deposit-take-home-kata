@@ -1,12 +1,9 @@
 package org.ikigaidigital.adapter.in.web.dto;
 
-import lombok.Builder;
-
 import java.time.LocalDate;
 
+import lombok.Builder;
+
 @Builder
-public record WithdrawalsResponseDTO(
-        Long id,
-        Double amount,
-        LocalDate date
-){}
+public record WithdrawalsResponseDTO(Long id, Double amount, LocalDate date) {
+}

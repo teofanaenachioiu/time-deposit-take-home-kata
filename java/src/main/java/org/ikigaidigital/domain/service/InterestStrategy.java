@@ -5,8 +5,8 @@ import org.ikigaidigital.domain.model.TimeDeposit;
 
 public interface InterestStrategy {
 
-    PlanType supports();
+	PlanType supports();
 
-    Double calculateInterest(TimeDeposit deposit);
+	Double calculateInterest(TimeDeposit deposit);
 
 }

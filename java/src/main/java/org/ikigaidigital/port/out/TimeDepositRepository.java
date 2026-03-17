@@ -1,13 +1,13 @@
 package org.ikigaidigital.port.out;
 
-import org.ikigaidigital.domain.model.TimeDeposit;
-
 import java.util.List;
+
+import org.ikigaidigital.domain.model.TimeDeposit;
 
 public interface TimeDepositRepository {
 
-    List<TimeDeposit> findAll();
+	List<TimeDeposit> findAll();
 
-    void save(List<TimeDeposit> timeDepositList);
+	void save(List<TimeDeposit> timeDepositList);
 
 }

@@ -1,17 +1,17 @@
 package org.ikigaidigital.adapter.out.persistence.repository;
 
+import java.util.List;
+
 import org.ikigaidigital.adapter.out.persistence.entity.TimeDepositEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
 public interface TimeDepositJpaRepository extends JpaRepository<TimeDepositEntity, Integer> {
 
-    @Query("""
-        SELECT DISTINCT td
-        FROM TimeDepositEntity td
-        LEFT JOIN FETCH td.withdrawals
-    """)
-    List<TimeDepositEntity> findAllWithWithdrawals();
+	@Query("""
+			    SELECT DISTINCT td
+			    FROM TimeDepositEntity td
+			    LEFT JOIN FETCH td.withdrawals
+			""")
+	List<TimeDepositEntity> findAllWithWithdrawals();
 }
