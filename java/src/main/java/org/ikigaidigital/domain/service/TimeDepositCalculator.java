@@ -1,5 +1,7 @@
 package org.ikigaidigital.domain.service;
 
+import lombok.AllArgsConstructor;
+import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +10,25 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class TimeDepositCalculator {
+
+    private final InterestStrategyFactory strategyFactory;
+
+    public void updateBalanceRefactor(List<TimeDeposit> deposits) {
+        for (TimeDeposit deposit : deposits) {
+            PlanType planType = PlanType.valueOf(deposit.getPlanType().toUpperCase());
+            InterestStrategy strategy = strategyFactory.getStrategy(planType);
+            Double interest = strategy.calculateInterest(deposit);
+
+            Double updatedBalance = BigDecimal.valueOf(deposit.getBalance() + interest)
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .doubleValue();
+
+            deposit.setBalance(updatedBalance);
+        }
+    }
+
     public void updateBalance(List<TimeDeposit> xs) {
         for (int i = 0; i < xs.size(); i++) {
             double interest = 0;
