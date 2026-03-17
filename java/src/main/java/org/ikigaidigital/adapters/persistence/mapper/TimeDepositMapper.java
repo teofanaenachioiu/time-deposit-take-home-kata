@@ -1,6 +1,7 @@
 package org.ikigaidigital.adapters.persistence.mapper;
 
 import org.ikigaidigital.adapters.persistence.entity.TimeDepositEntity;
+import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public class TimeDepositMapper {
     public static TimeDeposit toDomain(TimeDepositEntity entity) {
         return new TimeDeposit(
                 entity.getId(),
-                entity.getPlanType(),
+                entity.getPlanType().toString(),
                 entity.getBalance(),
                 entity.getDays()
         );
@@ -19,7 +20,7 @@ public class TimeDepositMapper {
     public static TimeDepositEntity toEntity(TimeDeposit deposit) {
         return TimeDepositEntity.builder()
                 .id(deposit.getId())
-                .planType(deposit.getPlanType())
+                .planType(PlanType.valueOf(deposit.getPlanType().toUpperCase()))
                 .balance(deposit.getBalance())
                 .days(deposit.getDays())
                 .build();

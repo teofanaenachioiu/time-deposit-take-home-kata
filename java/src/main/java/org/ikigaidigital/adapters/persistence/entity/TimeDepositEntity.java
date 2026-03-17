@@ -2,6 +2,7 @@ package org.ikigaidigital.adapters.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.ikigaidigital.domain.model.PlanType;
 
 import java.util.List;
 
@@ -19,11 +20,12 @@ public class TimeDepositEntity {
     private Integer id;
 
     @Column(name = "plan_type")
-    private String planType;
+    @Enumerated(EnumType.STRING)
+    private PlanType planType;
 
     private Double balance;
 
-    private int days;
+    private Integer days;
 
     @OneToMany(mappedBy = "timeDeposit", fetch = FetchType.LAZY)
     private List<WithdrawalEntity> withdrawals;

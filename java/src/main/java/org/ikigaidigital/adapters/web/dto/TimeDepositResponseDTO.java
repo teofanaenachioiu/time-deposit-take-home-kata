@@ -1,14 +1,15 @@
 package org.ikigaidigital.adapters.web.dto;
 
 import lombok.Builder;
+import org.ikigaidigital.domain.model.PlanType;
 
 import java.util.List;
 
 @Builder
 public record TimeDepositResponseDTO (
-     int id,
-     String planType,
+     Integer id,
+     PlanType planType,
      Double balance,
-     int days,
+     Integer days,
      List<WithdrawalsResponseDTO> withdrawals
 ){}
