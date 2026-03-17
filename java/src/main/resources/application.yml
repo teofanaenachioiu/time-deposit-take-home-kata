@@ -13,3 +13,7 @@ spring:
 
 api:
   base-path: /api/v1
+
+logging:
+  level:
+    org.ikigaidigital: DEBUG
