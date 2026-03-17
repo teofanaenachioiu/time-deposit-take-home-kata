@@ -7,6 +7,7 @@ import org.ikigaidigital.domain.service.TimeDepositCalculator;
 import org.ikigaidigital.port.in.TimeDepositUpdateBalanceUseCase;
 import org.ikigaidigital.port.out.TimeDepositRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ public class TimeDepositUpdateBalanceService implements TimeDepositUpdateBalance
 	private final TimeDepositRepository repository;
 	private final TimeDepositCalculator calculator;
 
+	@Transactional
 	@Override
 	public void updateAllTimeDepositsBalance() {
 		log.info("Starting balance update for all time deposits");
