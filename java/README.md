@@ -117,6 +117,19 @@ src/
         └── integration          # integration tests
 ```
 
+## Trade-Offs
+
+`TimeDeposit`
+- `TimeDeposit` was kept close to the initial structure.
+- The domain model still uses `Double` for `balance`, while the database stores money as `DECIMAL`.
+- To keep calculations safer, interest is calculated with `BigDecimal` in the calculator, then converted back to `Double` when the updated balance is written into the domain object.
+- This works for the current scope, but it is not ideal for money values because it adds conversion steps and can still introduce precision risk in the domain model.
+
+`updateAllTimeDepositsBalance()`
+- `updateAllTimeDepositsBalance()` currently loads all deposits into memory before recalculating and saving them.
+- This is acceptable for a small dataset, but it does not scale well for large volumes of data.
+- A better approach would be to process deposits in pages or batches, for example by reading a limited number of rows, updating them, saving them, and then moving to the next batch.
+
 ## Seed Data
 
 On startup, Flyway loads a small initial dataset:
