@@ -1,8 +1,11 @@
 package org.ikigaidigital.unit.adapter.out.persistence.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,9 +31,9 @@ class TimeDepositRepositoryAdapterTest {
 	void findAllWithWithdrawals_shouldMapEntitiesToView() {
 		TimeDepositRepositoryAdapter adapter = new TimeDepositRepositoryAdapter(jpaRepository);
 		List<TimeDepositEntity> entities = List.of(TimeDepositEntity.builder().id(1).planType(PlanType.BASIC)
-				.balance(100.0).days(60)
-				.withdrawals(
-						List.of(WithdrawalEntity.builder().id(8L).amount(10.0).date(LocalDate.of(2026, 1, 10)).build()))
+				.balance(new BigDecimal("100.00")).days(60)
+				.withdrawals(List.of(WithdrawalEntity.builder().id(8).amount(new BigDecimal("10.00"))
+						.date(LocalDate.of(2026, 1, 10)).build()))
 				.build());
 		when(jpaRepository.findAllWithWithdrawals()).thenReturn(entities);
 
@@ -47,8 +50,8 @@ class TimeDepositRepositoryAdapterTest {
 	@Test
 	void findAll_shouldMapEntitiesToDomain() {
 		TimeDepositRepositoryAdapter adapter = new TimeDepositRepositoryAdapter(jpaRepository);
-		List<TimeDepositEntity> entities = List
-				.of(TimeDepositEntity.builder().id(1).planType(PlanType.STUDENT).balance(200.0).days(100).build());
+		List<TimeDepositEntity> entities = List.of(TimeDepositEntity.builder().id(1).planType(PlanType.STUDENT)
+				.balance(new BigDecimal("200.00")).days(100).build());
 		when(jpaRepository.findAll()).thenReturn(entities);
 
 		List<TimeDeposit> result = adapter.findAll();
@@ -59,5 +62,4 @@ class TimeDepositRepositoryAdapterTest {
 		verify(jpaRepository).findAll();
 		verifyNoMoreInteractions(jpaRepository);
 	}
-
 }

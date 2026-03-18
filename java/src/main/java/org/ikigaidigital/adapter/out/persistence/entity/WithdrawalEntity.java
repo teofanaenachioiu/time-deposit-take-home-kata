@@ -1,5 +1,6 @@
 package org.ikigaidigital.adapter.out.persistence.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
@@ -17,9 +18,9 @@ public class WithdrawalEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
-	private Double amount;
+	private BigDecimal amount;
 
 	@Column(name = "transaction_date")
 	private LocalDate date;

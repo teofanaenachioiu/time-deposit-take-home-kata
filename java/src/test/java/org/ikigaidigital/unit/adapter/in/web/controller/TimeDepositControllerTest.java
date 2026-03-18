@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,10 +35,10 @@ class TimeDepositControllerTest {
 	@Test
 	void getAll_shouldReturnOkWithMappedDtoList() {
 		TimeDepositController controller = new TimeDepositController(getAllUseCase, updateBalanceUseCase);
-		List<TimeDepositView> views = List.of(TimeDepositView.builder().id(1).planType(PlanType.BASIC).balance(100.0)
-				.days(60)
-				.withdrawals(
-						List.of(WithdrawalView.builder().id(10L).amount(5.0).date(LocalDate.of(2026, 1, 10)).build()))
+		List<TimeDepositView> views = List.of(TimeDepositView.builder().id(1).planType(PlanType.BASIC)
+				.balance(new BigDecimal("100.00")).days(60)
+				.withdrawals(List.of(WithdrawalView.builder().id(10).amount(new BigDecimal("5.00"))
+						.date(LocalDate.of(2026, 1, 10)).build()))
 				.build());
 		when(getAllUseCase.getAll()).thenReturn(views);
 
@@ -48,7 +49,7 @@ class TimeDepositControllerTest {
 		assertThat(response.getBody().get(0).id()).isEqualTo(1);
 		assertThat(response.getBody().get(0).planType()).isEqualTo(PlanType.BASIC);
 		assertThat(response.getBody().get(0).withdrawals()).hasSize(1);
-		assertThat(response.getBody().get(0).withdrawals().get(0).id()).isEqualTo(10L);
+		assertThat(response.getBody().get(0).withdrawals().get(0).id()).isEqualTo(10);
 		verify(getAllUseCase).getAll();
 		verifyNoMoreInteractions(getAllUseCase, updateBalanceUseCase);
 	}

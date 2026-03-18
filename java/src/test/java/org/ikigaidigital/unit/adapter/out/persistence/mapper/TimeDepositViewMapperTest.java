@@ -2,6 +2,7 @@ package org.ikigaidigital.unit.adapter.out.persistence.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,28 +17,29 @@ class TimeDepositViewMapperTest {
 
 	@Test
 	void toView_shouldMapAllFieldsIncludingWithdrawals() {
-		TimeDepositEntity entity = TimeDepositEntity.builder().id(1).planType(PlanType.STUDENT).balance(300.0).days(120)
-				.withdrawals(
-						List.of(WithdrawalEntity.builder().id(9L).amount(15.0).date(LocalDate.of(2026, 2, 14)).build()))
+		TimeDepositEntity entity = TimeDepositEntity.builder().id(1).planType(PlanType.STUDENT)
+				.balance(new BigDecimal("300.00")).days(120)
+				.withdrawals(List.of(WithdrawalEntity.builder().id(9).amount(new BigDecimal("15.00"))
+						.date(LocalDate.of(2026, 2, 14)).build()))
 				.build();
 
 		TimeDepositView view = TimeDepositViewMapper.toView(entity);
 
 		assertThat(view.id()).isEqualTo(1);
 		assertThat(view.planType()).isEqualTo(PlanType.STUDENT);
-		assertThat(view.balance()).isEqualTo(300.0);
+		assertThat(view.balance()).isEqualByComparingTo("300.00");
 		assertThat(view.days()).isEqualTo(120);
 		assertThat(view.withdrawals()).hasSize(1);
-		assertThat(view.withdrawals().get(0).id()).isEqualTo(9L);
+		assertThat(view.withdrawals().get(0).id()).isEqualTo(9);
 	}
 
 	@Test
 	void toViewList_shouldMapEachElement() {
 		List<TimeDepositEntity> entities = List.of(
-				TimeDepositEntity.builder().id(1).planType(PlanType.BASIC).balance(10.0).days(10).withdrawals(List.of())
-						.build(),
-				TimeDepositEntity.builder().id(2).planType(PlanType.PREMIUM).balance(20.0).days(20)
-						.withdrawals(List.of()).build());
+				TimeDepositEntity.builder().id(1).planType(PlanType.BASIC).balance(new BigDecimal("10.00")).days(10)
+						.withdrawals(List.of()).build(),
+				TimeDepositEntity.builder().id(2).planType(PlanType.PREMIUM).balance(new BigDecimal("20.00"))
+						.days(20).withdrawals(List.of()).build());
 
 		List<TimeDepositView> views = TimeDepositViewMapper.toView(entities);
 

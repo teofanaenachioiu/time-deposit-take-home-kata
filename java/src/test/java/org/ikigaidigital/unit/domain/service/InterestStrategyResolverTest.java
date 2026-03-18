@@ -3,6 +3,7 @@ package org.ikigaidigital.unit.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.ikigaidigital.domain.model.PlanType;
@@ -66,8 +67,8 @@ class InterestStrategyResolverTest {
 		}
 
 		@Override
-		public Double calculateInterest(TimeDeposit deposit) {
-			return 0.0;
+		public BigDecimal calculateInterest(TimeDeposit deposit) {
+			return BigDecimal.ZERO;
 		}
 	}
 }

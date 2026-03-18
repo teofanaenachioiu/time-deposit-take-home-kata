@@ -1,7 +1,11 @@
 package org.ikigaidigital.unit.application.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.ikigaidigital.application.service.TimeDepositUpdateBalanceService;
@@ -26,8 +30,8 @@ class TimeDepositUpdateBalanceServiceTest {
 	@Test
 	void updateAllTimeDepositsBalance_shouldLoadUpdateAndSave_inOrder() {
 		TimeDepositUpdateBalanceService service = new TimeDepositUpdateBalanceService(repository, calculator);
-		List<TimeDeposit> deposits = List.of(new TimeDeposit(1, "basic", 100.0, 60),
-				new TimeDeposit(2, "student", 200.0, 120));
+		List<TimeDeposit> deposits = List.of(new TimeDeposit(1, "basic", 100.00, 60),
+				new TimeDeposit(2, "student", 200.00, 120));
 		when(repository.findAll()).thenReturn(deposits);
 
 		service.updateAllTimeDepositsBalance();

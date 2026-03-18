@@ -20,12 +20,13 @@ public class TimeDepositCalculator {
 		for (TimeDeposit deposit : deposits) {
 			PlanType planType = PlanType.valueOf(deposit.getPlanType().toUpperCase());
 			InterestStrategy strategy = strategyResolver.getStrategy(planType);
-			Double interest = strategy.calculateInterest(deposit);
+			BigDecimal interest = strategy.calculateInterest(deposit);
 
-			Double updatedBalance = BigDecimal.valueOf(deposit.getBalance() + interest)
-					.setScale(2, RoundingMode.HALF_UP).doubleValue();
+			BigDecimal updatedBalance = BigDecimal.valueOf(deposit.getBalance())
+					.add(interest)
+					.setScale(2, RoundingMode.HALF_UP);
 
-			deposit.setBalance(updatedBalance);
+			deposit.setBalance(updatedBalance.doubleValue());
 		}
 	}
 

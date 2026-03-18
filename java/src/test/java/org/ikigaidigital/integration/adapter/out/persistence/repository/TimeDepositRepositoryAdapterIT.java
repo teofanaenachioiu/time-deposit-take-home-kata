@@ -2,6 +2,7 @@ package org.ikigaidigital.integration.adapter.out.persistence.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 
@@ -74,16 +75,22 @@ class TimeDepositRepositoryAdapterIT {
 		assertThat(deposits).extracting(TimeDeposit::getId).containsExactly(1, 2, 3, 4, 5);
 		assertThat(deposits).extracting(TimeDeposit::getPlanType).containsExactly("BASIC", "STUDENT", "PREMIUM",
 				"STUDENT", "BASIC");
-		assertThat(deposits).extracting(TimeDeposit::getBalance).containsExactly(1000.0, 2000.0, 5000.0, 3000.0,
-				1500.0);
+		assertThat(deposits.get(0).getBalance()).isEqualByComparingTo(1000.00);
+		assertThat(deposits.get(1).getBalance()).isEqualByComparingTo(2000.00);
+		assertThat(deposits.get(2).getBalance()).isEqualByComparingTo(5000.00);
+		assertThat(deposits.get(3).getBalance()).isEqualByComparingTo(3000.00);
+		assertThat(deposits.get(4).getBalance()).isEqualByComparingTo(1500.00);
 		assertThat(deposits).extracting(TimeDeposit::getDays).containsExactly(20, 100, 50, 400, 60);
 	}
 
 	@Test
 	void save_shouldPersistUpdatedBalances() {
-		List<TimeDeposit> updatedDeposits = List.of(new TimeDeposit(1, "BASIC", 1111.11, 20),
-				new TimeDeposit(2, "STUDENT", 2222.22, 100), new TimeDeposit(3, "PREMIUM", 3333.33, 50),
-				new TimeDeposit(4, "STUDENT", 4444.44, 400), new TimeDeposit(5, "BASIC", 5555.55, 60));
+		List<TimeDeposit> updatedDeposits = List.of(
+				new TimeDeposit(1, "BASIC", 1111.11, 20),
+				new TimeDeposit(2, "STUDENT", 2222.22, 100),
+				new TimeDeposit(3, "PREMIUM", 3333.33, 50),
+				new TimeDeposit(4, "STUDENT", 4444.44, 400),
+				new TimeDeposit(5, "BASIC", 5555.55, 60));
 
 		adapter.save(updatedDeposits);
 
@@ -93,8 +100,11 @@ class TimeDepositRepositoryAdapterIT {
 				.toList();
 
 		assertThat(persistedDeposits).hasSize(5);
-		assertThat(persistedDeposits).extracting(TimeDepositEntity::getBalance).containsExactly(1111.11, 2222.22,
-				3333.33, 4444.44, 5555.55);
+		assertThat(persistedDeposits.get(0).getBalance()).isEqualByComparingTo(new BigDecimal("1111.11"));
+		assertThat(persistedDeposits.get(1).getBalance()).isEqualByComparingTo(new BigDecimal("2222.22"));
+		assertThat(persistedDeposits.get(2).getBalance()).isEqualByComparingTo(new BigDecimal("3333.33"));
+		assertThat(persistedDeposits.get(3).getBalance()).isEqualByComparingTo(new BigDecimal("4444.44"));
+		assertThat(persistedDeposits.get(4).getBalance()).isEqualByComparingTo(new BigDecimal("5555.55"));
 		assertThat(persistedPlanTypes).containsExactly("BASIC", "STUDENT", "PREMIUM", "STUDENT", "BASIC");
 		assertThat(jpaRepository.findAllWithWithdrawals()).extracting(deposit -> deposit.getWithdrawals().size())
 				.containsExactlyInAnyOrder(0, 0, 1, 2, 3);

@@ -2,6 +2,7 @@ package org.ikigaidigital.unit.adapter.out.persistence.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.ikigaidigital.adapter.out.persistence.entity.TimeDepositEntity;
@@ -14,34 +15,36 @@ class TimeDepositMapperTest {
 
 	@Test
 	void toDomain_shouldMapAllFields() {
-		TimeDepositEntity entity = TimeDepositEntity.builder().id(1).planType(PlanType.BASIC).balance(100.0).days(60)
-				.build();
+		TimeDepositEntity entity = TimeDepositEntity.builder().id(1).planType(PlanType.BASIC)
+				.balance(new BigDecimal("100.00")).days(60).build();
 
 		TimeDeposit domain = TimeDepositMapper.toDomain(entity);
 
 		assertThat(domain.getId()).isEqualTo(1);
 		assertThat(domain.getPlanType()).isEqualTo("BASIC");
-		assertThat(domain.getBalance()).isEqualTo(100.0);
+		assertThat(domain.getBalance()).isEqualByComparingTo(100.00);
 		assertThat(domain.getDays()).isEqualTo(60);
 	}
 
 	@Test
 	void toEntity_shouldMapAllFields() {
-		TimeDeposit domain = new TimeDeposit(2, "premium", 250.0, 90);
+		TimeDeposit domain = new TimeDeposit(2, "premium", 250.00, 90);
 
 		TimeDepositEntity entity = TimeDepositMapper.toEntity(domain);
 
 		assertThat(entity.getId()).isEqualTo(2);
 		assertThat(entity.getPlanType()).isEqualTo(PlanType.PREMIUM);
-		assertThat(entity.getBalance()).isEqualTo(250.0);
+		assertThat(entity.getBalance()).isEqualByComparingTo("250.00");
 		assertThat(entity.getDays()).isEqualTo(90);
 	}
 
 	@Test
 	void toDomainList_shouldMapEachElement() {
 		List<TimeDepositEntity> entities = List.of(
-				TimeDepositEntity.builder().id(1).planType(PlanType.BASIC).balance(10.0).days(10).build(),
-				TimeDepositEntity.builder().id(2).planType(PlanType.STUDENT).balance(20.0).days(20).build());
+				TimeDepositEntity.builder().id(1).planType(PlanType.BASIC).balance(new BigDecimal("10.00")).days(10)
+						.build(),
+				TimeDepositEntity.builder().id(2).planType(PlanType.STUDENT).balance(new BigDecimal("20.00"))
+						.days(20).build());
 
 		List<TimeDeposit> domains = TimeDepositMapper.toDomain(entities);
 
@@ -52,8 +55,8 @@ class TimeDepositMapperTest {
 
 	@Test
 	void toEntityList_shouldMapEachElement() {
-		List<TimeDeposit> domains = List.of(new TimeDeposit(1, "basic", 10.0, 10),
-				new TimeDeposit(2, "student", 20.0, 20));
+		List<TimeDeposit> domains = List.of(new TimeDeposit(1, "basic", 10.00, 10),
+				new TimeDeposit(2, "student", 20.00, 20));
 
 		List<TimeDepositEntity> entities = TimeDepositMapper.toEntity(domains);
 

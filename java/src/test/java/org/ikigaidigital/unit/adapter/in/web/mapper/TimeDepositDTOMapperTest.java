@@ -2,6 +2,7 @@ package org.ikigaidigital.unit.adapter.in.web.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,28 +17,29 @@ class TimeDepositDTOMapperTest {
 
 	@Test
 	void toDTO_shouldMapAllFields() {
-		TimeDepositView view = TimeDepositView.builder().id(1).planType(PlanType.STUDENT).balance(150.5).days(120)
-				.withdrawals(
-						List.of(WithdrawalView.builder().id(11L).amount(20.0).date(LocalDate.of(2026, 2, 1)).build()))
+		TimeDepositView view = TimeDepositView.builder().id(1).planType(PlanType.STUDENT)
+				.balance(new BigDecimal("150.50")).days(120)
+				.withdrawals(List.of(WithdrawalView.builder().id(11).amount(new BigDecimal("20.00"))
+						.date(LocalDate.of(2026, 2, 1)).build()))
 				.build();
 
 		TimeDepositResponseDTO dto = TimeDepositDTOMapper.toDTO(view);
 
 		assertThat(dto.id()).isEqualTo(1);
 		assertThat(dto.planType()).isEqualTo(PlanType.STUDENT);
-		assertThat(dto.balance()).isEqualTo(150.5);
+		assertThat(dto.balance()).isEqualByComparingTo("150.50");
 		assertThat(dto.days()).isEqualTo(120);
 		assertThat(dto.withdrawals()).hasSize(1);
-		assertThat(dto.withdrawals().get(0).id()).isEqualTo(11L);
+		assertThat(dto.withdrawals().get(0).id()).isEqualTo(11);
 	}
 
 	@Test
 	void toDTOList_shouldMapEachElement() {
 		List<TimeDepositView> views = List.of(
-				TimeDepositView.builder().id(1).planType(PlanType.BASIC).balance(10.0).days(10).withdrawals(List.of())
-						.build(),
-				TimeDepositView.builder().id(2).planType(PlanType.PREMIUM).balance(20.0).days(20).withdrawals(List.of())
-						.build());
+				TimeDepositView.builder().id(1).planType(PlanType.BASIC).balance(new BigDecimal("10.00")).days(10)
+						.withdrawals(List.of()).build(),
+				TimeDepositView.builder().id(2).planType(PlanType.PREMIUM).balance(new BigDecimal("20.00")).days(20)
+						.withdrawals(List.of()).build());
 
 		List<TimeDepositResponseDTO> dtos = TimeDepositDTOMapper.toDTO(views);
 

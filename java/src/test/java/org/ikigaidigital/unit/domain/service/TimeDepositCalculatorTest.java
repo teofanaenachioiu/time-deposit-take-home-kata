@@ -2,8 +2,13 @@ package org.ikigaidigital.unit.domain.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.ikigaidigital.domain.model.PlanType;
@@ -34,15 +39,15 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldUseBasicStrategy_forLowercasePlanType() {
-		TimeDeposit deposit = new TimeDeposit(1, "basic", 100.0, 90);
+		TimeDeposit deposit = new TimeDeposit(1, "basic", 100.00, 90);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.BASIC)).thenReturn(basicStrategy);
-		when(basicStrategy.calculateInterest(deposit)).thenReturn(1.11);
+		when(basicStrategy.calculateInterest(deposit)).thenReturn(new BigDecimal("1.11"));
 
 		calculator.updateBalance(List.of(deposit));
 
-		assertThat(deposit.getBalance()).isEqualTo(101.11);
+		assertThat(deposit.getBalance()).isEqualByComparingTo(101.11);
 		verify(strategyResolver).getStrategy(PlanType.BASIC);
 		verify(basicStrategy).calculateInterest(deposit);
 		verifyNoMoreInteractions(strategyResolver, basicStrategy, studentStrategy, premiumStrategy);
@@ -50,15 +55,15 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldUseStudentStrategy_forUppercasePlanType() {
-		TimeDeposit deposit = new TimeDeposit(2, "STUDENT", 50.0, 120);
+		TimeDeposit deposit = new TimeDeposit(2, "STUDENT", 50.00, 120);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.STUDENT)).thenReturn(studentStrategy);
-		when(studentStrategy.calculateInterest(deposit)).thenReturn(2.0);
+		when(studentStrategy.calculateInterest(deposit)).thenReturn(new BigDecimal("2.00"));
 
 		calculator.updateBalance(List.of(deposit));
 
-		assertThat(deposit.getBalance()).isEqualTo(52.0);
+		assertThat(deposit.getBalance()).isEqualByComparingTo(52.00);
 		verify(strategyResolver).getStrategy(PlanType.STUDENT);
 		verify(studentStrategy).calculateInterest(deposit);
 		verifyNoMoreInteractions(strategyResolver, basicStrategy, studentStrategy, premiumStrategy);
@@ -66,15 +71,15 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldUsePremiumStrategy_forMixedCasePlanType() {
-		TimeDeposit deposit = new TimeDeposit(3, "PrEmIuM", 200.0, 180);
+		TimeDeposit deposit = new TimeDeposit(3, "PrEmIuM", 200.00, 180);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.PREMIUM)).thenReturn(premiumStrategy);
-		when(premiumStrategy.calculateInterest(deposit)).thenReturn(3.45);
+		when(premiumStrategy.calculateInterest(deposit)).thenReturn(new BigDecimal("3.45"));
 
 		calculator.updateBalance(List.of(deposit));
 
-		assertThat(deposit.getBalance()).isEqualTo(203.45);
+		assertThat(deposit.getBalance()).isEqualByComparingTo(203.45);
 		verify(strategyResolver).getStrategy(PlanType.PREMIUM);
 		verify(premiumStrategy).calculateInterest(deposit);
 		verifyNoMoreInteractions(strategyResolver, basicStrategy, studentStrategy, premiumStrategy);
@@ -82,15 +87,15 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldRoundHalfUpToTwoDecimals() {
-		TimeDeposit deposit = new TimeDeposit(4, "basic", 100.0, 60);
+		TimeDeposit deposit = new TimeDeposit(4, "basic", 100.00, 60);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.BASIC)).thenReturn(basicStrategy);
-		when(basicStrategy.calculateInterest(deposit)).thenReturn(10.125);
+		when(basicStrategy.calculateInterest(deposit)).thenReturn(new BigDecimal("10.125"));
 
 		calculator.updateBalance(List.of(deposit));
 
-		assertThat(deposit.getBalance()).isEqualTo(110.13);
+		assertThat(deposit.getBalance()).isEqualByComparingTo(110.13);
 		verify(strategyResolver).getStrategy(PlanType.BASIC);
 		verify(basicStrategy).calculateInterest(deposit);
 		verifyNoMoreInteractions(strategyResolver, basicStrategy, studentStrategy, premiumStrategy);
@@ -98,23 +103,23 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldProcessAllDepositsInOrder() {
-		TimeDeposit basicDeposit = new TimeDeposit(1, "basic", 100.0, 60);
-		TimeDeposit studentDeposit = new TimeDeposit(2, "student", 50.0, 60);
-		TimeDeposit premiumDeposit = new TimeDeposit(3, "premium", 80.0, 60);
+		TimeDeposit basicDeposit = new TimeDeposit(1, "basic", 100.00, 60);
+		TimeDeposit studentDeposit = new TimeDeposit(2, "student", 50.00, 60);
+		TimeDeposit premiumDeposit = new TimeDeposit(3, "premium", 80.00, 60);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.BASIC)).thenReturn(basicStrategy);
 		when(strategyResolver.getStrategy(PlanType.STUDENT)).thenReturn(studentStrategy);
 		when(strategyResolver.getStrategy(PlanType.PREMIUM)).thenReturn(premiumStrategy);
-		when(basicStrategy.calculateInterest(basicDeposit)).thenReturn(1.0);
-		when(studentStrategy.calculateInterest(studentDeposit)).thenReturn(2.0);
-		when(premiumStrategy.calculateInterest(premiumDeposit)).thenReturn(3.0);
+		when(basicStrategy.calculateInterest(basicDeposit)).thenReturn(new BigDecimal("1.00"));
+		when(studentStrategy.calculateInterest(studentDeposit)).thenReturn(new BigDecimal("2.00"));
+		when(premiumStrategy.calculateInterest(premiumDeposit)).thenReturn(new BigDecimal("3.00"));
 
 		calculator.updateBalance(List.of(basicDeposit, studentDeposit, premiumDeposit));
 
-		assertThat(basicDeposit.getBalance()).isEqualTo(101.0);
-		assertThat(studentDeposit.getBalance()).isEqualTo(52.0);
-		assertThat(premiumDeposit.getBalance()).isEqualTo(83.0);
+		assertThat(basicDeposit.getBalance()).isEqualByComparingTo(101.00);
+		assertThat(studentDeposit.getBalance()).isEqualByComparingTo(52.00);
+		assertThat(premiumDeposit.getBalance()).isEqualByComparingTo(83.00);
 
 		InOrder inOrder = inOrder(strategyResolver, basicStrategy, studentStrategy, premiumStrategy);
 		inOrder.verify(strategyResolver).getStrategy(PlanType.BASIC);
@@ -137,7 +142,7 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldThrow_whenPlanTypeIsUnknown() {
-		TimeDeposit deposit = new TimeDeposit(5, "vip", 100.0, 30);
+		TimeDeposit deposit = new TimeDeposit(5, "vip", 100.00, 30);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		assertThatThrownBy(() -> calculator.updateBalance(List.of(deposit)))
@@ -149,7 +154,7 @@ class TimeDepositCalculatorTest {
 
 	@Test
 	void updateBalance_shouldPropagateResolverException() {
-		TimeDeposit deposit = new TimeDeposit(6, "basic", 120.0, 30);
+		TimeDeposit deposit = new TimeDeposit(6, "basic", 120.00, 30);
 		TimeDepositCalculator calculator = new TimeDepositCalculator(strategyResolver);
 
 		when(strategyResolver.getStrategy(PlanType.BASIC))

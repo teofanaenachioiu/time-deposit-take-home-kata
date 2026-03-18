@@ -2,6 +2,7 @@ package org.ikigaidigital.integration.application.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,7 +57,10 @@ class TimeDepositUpdateBalanceServiceIT {
 
 		assertThat(persistedDeposits).hasSize(5);
 		assertThat(persistedDeposits).extracting(TimeDeposit::getId).containsExactly(1, 2, 3, 4, 5);
-		assertThat(persistedDeposits).extracting(TimeDeposit::getBalance).containsExactly(1000.0, 2005.0, 5020.83,
-				3000.0, 1501.25);
+		assertThat(persistedDeposits.get(0).getBalance()).isEqualByComparingTo(1000.00);
+		assertThat(persistedDeposits.get(1).getBalance()).isEqualByComparingTo(2005.00);
+		assertThat(persistedDeposits.get(2).getBalance()).isEqualByComparingTo(5020.83);
+		assertThat(persistedDeposits.get(3).getBalance()).isEqualByComparingTo(3000.00);
+		assertThat(persistedDeposits.get(4).getBalance()).isEqualByComparingTo(1501.25);
 	}
 }

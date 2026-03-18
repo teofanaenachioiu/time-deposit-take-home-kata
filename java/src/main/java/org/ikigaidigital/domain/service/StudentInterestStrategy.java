@@ -1,5 +1,8 @@
 package org.ikigaidigital.domain.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.ikigaidigital.domain.model.PlanType;
 import org.ikigaidigital.domain.model.TimeDeposit;
 import org.springframework.stereotype.Component;
@@ -7,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentInterestStrategy implements InterestStrategy {
 
-	private static final Double INTEREST_RATE = 0.03;
-	private static final Double NO_INTEREST = 0.0;
+	private static final BigDecimal INTEREST_RATE = new BigDecimal("0.03");
+	private static final BigDecimal NO_INTEREST = BigDecimal.ZERO;
 
 	private static final Integer MIN_NUM_DAYS = 30;
 	private static final Integer MAX_NUM_DAYS = 366;
@@ -20,7 +23,7 @@ public class StudentInterestStrategy implements InterestStrategy {
 	}
 
 	@Override
-	public Double calculateInterest(TimeDeposit deposit) {
+	public BigDecimal calculateInterest(TimeDeposit deposit) {
 		if (deposit.getDays() <= MIN_NUM_DAYS) {
 			return NO_INTEREST;
 		}
@@ -29,6 +32,7 @@ public class StudentInterestStrategy implements InterestStrategy {
 			return NO_INTEREST;
 		}
 
-		return deposit.getBalance() * INTEREST_RATE / MONTHS_PER_YEAR;
+		return BigDecimal.valueOf(deposit.getBalance()).multiply(INTEREST_RATE)
+				.divide(BigDecimal.valueOf(MONTHS_PER_YEAR), 10, RoundingMode.HALF_UP);
 	}
 }

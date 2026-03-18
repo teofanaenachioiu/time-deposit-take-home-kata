@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -66,7 +67,7 @@ class TimeDepositControllerIT {
 		assertThat(deposits).hasSize(5);
 		assertThat(deposits.get(0).id()).isEqualTo(1);
 		assertThat(deposits.get(0).planType().name()).isEqualTo("BASIC");
-		assertThat(deposits.get(0).balance()).isEqualTo(1000.0);
+		assertThat(deposits.get(0).balance()).isEqualByComparingTo(new BigDecimal("1000.00"));
 		assertThat(deposits.get(0).withdrawals()).hasSize(0);
 		assertThat(deposits.get(1).id()).isEqualTo(2);
 		assertThat(deposits.get(1).planType().name()).isEqualTo("STUDENT");
@@ -89,11 +90,11 @@ class TimeDepositControllerIT {
 		List<TimeDepositResponseDTO> deposits = readAndSortResponse(result);
 
 		assertThat(deposits).hasSize(5);
-		assertThat(deposits.get(0).balance()).isEqualTo(1000.0);
-		assertThat(deposits.get(1).balance()).isEqualTo(2005.0);
-		assertThat(deposits.get(2).balance()).isEqualTo(5020.83);
-		assertThat(deposits.get(3).balance()).isEqualTo(3000.0);
-		assertThat(deposits.get(4).balance()).isEqualTo(1501.25);
+		assertThat(deposits.get(0).balance()).isEqualByComparingTo(new BigDecimal("1000.00"));
+		assertThat(deposits.get(1).balance()).isEqualByComparingTo(new BigDecimal("2005.00"));
+		assertThat(deposits.get(2).balance()).isEqualByComparingTo(new BigDecimal("5020.83"));
+		assertThat(deposits.get(3).balance()).isEqualByComparingTo(new BigDecimal("3000.00"));
+		assertThat(deposits.get(4).balance()).isEqualByComparingTo(new BigDecimal("1501.25"));
 	}
 
 	private List<TimeDepositResponseDTO> readAndSortResponse(MvcResult result) {

@@ -1,5 +1,6 @@
 package org.ikigaidigital.adapter.out.persistence.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ public class TimeDepositEntity {
 	@Enumerated(EnumType.STRING)
 	private PlanType planType;
 
-	private Double balance;
+	private BigDecimal balance;
 
 	private Integer days;
 

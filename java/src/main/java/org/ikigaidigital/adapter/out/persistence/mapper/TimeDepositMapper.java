@@ -1,5 +1,6 @@
 package org.ikigaidigital.adapter.out.persistence.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.ikigaidigital.adapter.out.persistence.entity.TimeDepositEntity;
@@ -9,12 +10,13 @@ import org.ikigaidigital.domain.model.TimeDeposit;
 public class TimeDepositMapper {
 
 	public static TimeDeposit toDomain(TimeDepositEntity entity) {
-		return new TimeDeposit(entity.getId(), entity.getPlanType().toString(), entity.getBalance(), entity.getDays());
+		return new TimeDeposit(entity.getId(), entity.getPlanType().toString(), entity.getBalance().doubleValue(), entity.getDays());
 	}
 
 	public static TimeDepositEntity toEntity(TimeDeposit deposit) {
 		return TimeDepositEntity.builder().id(deposit.getId())
-				.planType(PlanType.valueOf(deposit.getPlanType().toUpperCase())).balance(deposit.getBalance())
+				.planType(PlanType.valueOf(deposit.getPlanType().toUpperCase()))
+				.balance(BigDecimal.valueOf(deposit.getBalance()))
 				.days(deposit.getDays()).build();
 	}
 
