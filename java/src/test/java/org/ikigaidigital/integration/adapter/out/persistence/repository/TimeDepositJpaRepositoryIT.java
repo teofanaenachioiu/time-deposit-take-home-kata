@@ -5,32 +5,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Comparator;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.ikigaidigital.adapter.out.persistence.entity.TimeDepositEntity;
 import org.ikigaidigital.adapter.out.persistence.repository.TimeDepositJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TimeDepositJpaRepositoryIT {
+
+	private final TimeDepositJpaRepository repository;
+	private final Flyway flyway;
 
 	@Container
 	static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:16-alpine")
 			.withDatabaseName("time_deposits").withUsername("postgres").withPassword("postgres");
-
-	@Autowired
-	private TimeDepositJpaRepository repository;
-
-	@Autowired
-	private Flyway flyway;
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {

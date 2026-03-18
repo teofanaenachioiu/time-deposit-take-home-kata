@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.ikigaidigital.adapter.in.web.dto.TimeDepositResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,20 +31,16 @@ import tools.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TimeDepositControllerIT {
+
+    private final MockMvc mockMvc;
+    private final Flyway flyway;
+    private final ObjectMapper objectMapper;
 
 	@Container
 	static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:16-alpine")
 			.withDatabaseName("time_deposits").withUsername("postgres").withPassword("postgres");
-
-	@Autowired
-	private MockMvc mockMvc;
-
-	@Autowired
-	private Flyway flyway;
-
-	@Autowired
-	private ObjectMapper objectMapper;
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {

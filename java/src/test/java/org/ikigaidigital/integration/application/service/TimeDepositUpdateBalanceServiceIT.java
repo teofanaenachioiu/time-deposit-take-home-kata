@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Comparator;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.ikigaidigital.domain.model.TimeDeposit;
 import org.ikigaidigital.port.in.TimeDepositUpdateBalanceUseCase;
@@ -21,20 +22,16 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 
 @SpringBootTest
 @Testcontainers
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TimeDepositUpdateBalanceServiceIT {
+
+	private final TimeDepositUpdateBalanceUseCase updateBalanceUseCase;
+	private final TimeDepositRepository repository;
+	private final Flyway flyway;
 
 	@Container
 	static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:16-alpine")
 			.withDatabaseName("time_deposits").withUsername("postgres").withPassword("postgres");
-
-	@Autowired
-	private TimeDepositUpdateBalanceUseCase updateBalanceUseCase;
-
-	@Autowired
-	private TimeDepositRepository repository;
-
-	@Autowired
-	private Flyway flyway;
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
